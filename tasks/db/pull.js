@@ -6,8 +6,8 @@ module.exports = function(gruntOrShipit) {
   var task = function task() {
     var shipit = db(utils.getShipit(gruntOrShipit));
     var dumpFile = shipit.db.dumpFile('remote');
-    var remoteDumpFilePath = path.join(shipit.sharedPath || shipit.currentPath, dumpFile);
-    var localDumpFilePath = path.join(shipit.config.workspace, dumpFile);
+    var remoteDumpFilePath = path.join(shipit.sharedPath || shipit.currentPath, shipit.db.remoteDumpFile('remote', dumpFile));
+    var localDumpFilePath = path.join(shipit.config.workspace, shipit.db.localDumpFile('remote', dumpFile));
 
     var download = function download() {
       return shipit.remoteCopy(remoteDumpFilePath, localDumpFilePath, {

@@ -7,8 +7,9 @@ var db = require('../../lib/db');
 module.exports = function(gruntOrShipit) {
   var task = function task() {
     var shipit = db(utils.getShipit(gruntOrShipit));
-    var remoteDumpFilePath = path.join(shipit.sharedPath || shipit.currentPath, shipit.db.dumpFile('local'));
-    var localDumpFilePath = path.join(shipit.config.workspace, shipit.db.dumpFile('local'));
+    var dumpFile = shipit.db.dumpFile('local');
+    var remoteDumpFilePath = path.join(shipit.sharedPath || shipit.currentPath, shipit.db.remoteDumpFile('local', dumpFile));
+    var localDumpFilePath = path.join(shipit.config.workspace, shipit.db.localDumpFile('local', dumpFile));
 
     var upload = function upload() {
       return shipit.remoteCopy(localDumpFilePath, remoteDumpFilePath);
